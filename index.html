@@ -420,7 +420,9 @@ function updateCartUI() {
 
   itemsEl.innerHTML = cart.map(i => {
     const opts = [i.size, i.color].filter(Boolean).join(' · ');
-    const thumb = i.img ? `<img src="${i.img}" style="width:100%;height:100%;object-fit:contain"/>` : (i.emoji || categoryEmoji(i.category));
+    const thumb = i.img
+      ? `<img src="${i.img}" style="width:100%;height:100%;object-fit:contain;border-radius:6px"/>`
+      : (i.emoji && i.emoji !== 'null' ? i.emoji : categoryEmoji(i.category));
     return `
     <div class="cart-item">
       <div class="ci-img">${thumb}</div>

@@ -314,9 +314,14 @@ footer .links a:hover{color:var(--gold)}
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
 
+<script src="products.js"></script>
 <script>
 // ── PRODUCTS ──────────────────────────────────────────────────────────────────
-const PRODUCTS = [
+// Loaded from products.js (exported from V Tactical Store Manager)
+// Falls back to built-in list if products.js hasn't been uploaded yet
+const PRODUCTS = (typeof window.STORE_PRODUCTS !== 'undefined' && window.STORE_PRODUCTS.length)
+  ? window.STORE_PRODUCTS
+  : [
   { id:'p1',  name:'Green Military Socks',             category:'Clothing',     price:65,  stock:20, emoji:'🧦' },
   { id:'p2',  name:'Men Tactical Gloves (Fingerless)', category:'Accessories',  price:250, stock:12, emoji:'🧤' },
   { id:'p3',  name:'Cooling Neck Gaiter',              category:'Accessories',  price:55,  stock:3,  emoji:'🧣' },

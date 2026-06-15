@@ -418,6 +418,15 @@ function closeCart() {
 }
 
 // ── PRODUCTS RENDER ───────────────────────────────────────────────────────────
+function categoryEmoji(cat) {
+  const name = (cat || '').toLowerCase();
+  if (name.includes('foot')) return '🥾';
+  if (name.includes('cloth')) return '👕';
+  if (name.includes('fitness')) return '💪';
+  if (name.includes('commdr')) return '🪖';
+  return '🎒';
+}
+
 function setFilter(cat, el) {
   activeFilter = cat;
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -438,8 +447,11 @@ function renderProducts() {
   }
   grid.innerHTML = list.map(p => {
     const outOfStock = p.stock === 0;
+    const imgContent = p.img
+      ? `<img src="${p.img}" style="width:100%;height:100%;object-fit:cover;display:block"/>`
+      : (p.emoji || categoryEmoji(p.category));
     return `<div class="card">
-      <div class="card-img">${p.emoji}</div>
+      <div class="card-img">${imgContent}</div>
       <div class="card-body">
         <div class="card-name">${p.name}</div>
         <div class="card-cat">${p.category}${p.stock > 0 && p.stock <= 3 ? ' · <span style="color:var(--warning)">Only '+p.stock+' left</span>' : ''}</div>

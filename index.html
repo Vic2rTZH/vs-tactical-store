@@ -230,7 +230,7 @@ footer .links a:hover{color:var(--gold)}
     <span class="hbadge">📱 Airtel Money</span>
     <span class="hbadge">📱 MTN MoMo</span>
     <span class="hbadge">🚗 Yango Delivery</span>
-    <span class="hbadge">✅ Secure & Trusted</span>
+    <span class="hbadge">🏪 Pickup in Lilayi</span>
   </div>
 </section>
 
@@ -238,8 +238,8 @@ footer .links a:hover{color:var(--gold)}
 <div class="trust-bar">
   <div class="trust-item"><div class="trust-icon">📱</div><div class="trust-label">Airtel & MTN<br>Mobile Money</div></div>
   <div class="trust-item"><div class="trust-icon">🚗</div><div class="trust-label">Yango delivery<br>across Lusaka</div></div>
-  <div class="trust-item"><div class="trust-icon">📦</div><div class="trust-label">Same-day<br>dispatch</div></div>
-  <div class="trust-item"><div class="trust-icon">💬</div><div class="trust-label">WhatsApp<br>support</div></div>
+  <div class="trust-item"><div class="trust-icon">🏪</div><div class="trust-label">Pickup at<br>TK's Collection, Lilayi</div></div>
+  <div class="trust-item"><div class="trust-icon">💬</div><div class="trust-label">WhatsApp<br>+260 962 773 525</div></div>
 </div>
 
 <!-- SHOP -->
@@ -452,10 +452,12 @@ function renderProducts() {
 let checkoutStep = 1;
 let orderData = {};
 let selectedPayment = 'airtel';
+let selectedDelivery = 'yango';
 
-const WHATSAPP_NUMBER = '260977000000'; // ← replace with real number
-const AIRTEL_PAYBILL  = '5050';         // ← replace with real Airtel merchant number
-const MTN_PAYBILL     = '6060';         // ← replace with real MTN merchant number
+const WHATSAPP_NUMBER = '260962773525';
+const AIRTEL_NUMBER   = '0975281349';
+const MTN_NUMBER      = '0962773525';
+const OWNER_NAME      = 'Tisa Kaonga';
 
 function openCheckout() {
   if (cart.length === 0) return;
@@ -463,6 +465,7 @@ function openCheckout() {
   checkoutStep = 1;
   orderData = {};
   selectedPayment = 'airtel';
+  selectedDelivery = 'yango';
   document.getElementById('modal-overlay').classList.add('open');
   renderCheckoutStep();
 }
@@ -472,24 +475,46 @@ function closeCheckout() {
 }
 
 function renderCheckoutStep() {
-  document.getElementById('modal-title').textContent = ['', 'Your Details', 'Payment Method', 'Order Confirmed'][checkoutStep];
+  document.getElementById('modal-title').textContent = ['', 'Your Details', 'Pay & Confirm', 'All Done!'][checkoutStep];
   const body = document.getElementById('modal-body');
 
   if (checkoutStep === 1) {
     body.innerHTML = `
       ${stepsHTML(1)}
-      <div style="margin-bottom:16px">
-        <div class="form-row">
-          <div class="form-group"><label>First name</label><input id="f-first" type="text" placeholder="Mwila" value="${orderData.first||''}"/></div>
-          <div class="form-group"><label>Last name</label><input id="f-last" type="text" placeholder="Banda" value="${orderData.last||''}"/></div>
+      <div class="form-row">
+        <div class="form-group"><label>First name</label><input id="f-first" type="text" placeholder="Mwila" value="${orderData.first||''}"/></div>
+        <div class="form-group"><label>Last name</label><input id="f-last" type="text" placeholder="Banda" value="${orderData.last||''}"/></div>
+      </div>
+      <div class="form-group"><label>Your phone number</label><input id="f-phone" type="tel" placeholder="+260 97 000 0000" value="${orderData.phone||''}"/></div>
+
+      <div style="font-size:12px;font-weight:600;color:var(--muted);margin:14px 0 8px;text-transform:uppercase;letter-spacing:.5px">How would you like to receive your order?</div>
+      <div class="pay-option ${selectedDelivery==='yango'?'selected':''}" onclick="selectDelivery('yango')" style="margin-bottom:8px">
+        <div class="pay-icon" style="background:#fff0e6">🚗</div>
+        <div>
+          <div class="pay-label">Yango Delivery</div>
+          <div class="pay-sub">Delivered to your door · You pay the driver on arrival</div>
         </div>
-        <div class="form-group"><label>Phone number</label><input id="f-phone" type="tel" placeholder="+260 97 000 0000" value="${orderData.phone||''}"/></div>
-        <div class="form-group"><label>Delivery address (Lusaka)</label><input id="f-address" type="text" placeholder="e.g. Plot 14, Kabulonga Road" value="${orderData.address||''}"/></div>
-        <div class="form-group"><label>Delivery notes (optional)</label><textarea id="f-notes" rows="2" placeholder="Landmark, gate colour, etc.">${orderData.notes||''}</textarea></div>
+        <div class="radio-dot ${selectedDelivery==='yango'?'selected':''}"></div>
       </div>
-      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px;font-size:12px;color:var(--muted);margin-bottom:16px">
-        🚗 <strong style="color:var(--text)">Yango delivery</strong> — We'll arrange a Yango driver once your order is confirmed. Delivery fee is agreed with you via WhatsApp before dispatch.
+      <div class="pay-option ${selectedDelivery==='pickup'?'selected':''}" onclick="selectDelivery('pickup')" style="margin-bottom:14px">
+        <div class="pay-icon" style="background:#e6f4e6">🏪</div>
+        <div>
+          <div class="pay-label">Self Pickup — Free</div>
+          <div class="pay-sub">TK's Collection · Lilayi Road, Lusaka</div>
+        </div>
+        <div class="radio-dot ${selectedDelivery==='pickup'?'selected':''}"></div>
       </div>
+
+      ${selectedDelivery === 'yango' ? `
+      <div class="form-group"><label>Delivery address</label><input id="f-address" type="text" placeholder="e.g. Plot 14, Kabulonga Road, Lusaka" value="${orderData.address||''}"/></div>
+      <div class="form-group"><label>Landmark / notes (optional)</label><textarea id="f-notes" rows="2" placeholder="Gate colour, nearest landmark, etc.">${orderData.notes||''}</textarea></div>
+      ` : `
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px;font-size:12px;color:var(--muted);margin-bottom:14px">
+        📍 <strong style="color:var(--text)">TK's Collection</strong> — Lilayi Road, Lusaka. We'll WhatsApp you when your order is ready for pickup.
+      </div>
+      <input type="hidden" id="f-address" value="Self Pickup — TK's Collection, Lilayi Road"/>
+      <input type="hidden" id="f-notes" value=""/>
+      `}
       <button class="btn-full btn-next" onclick="submitDetails()">Continue to Payment →</button>`;
   }
 
@@ -497,52 +522,77 @@ function renderCheckoutStep() {
     const total = cartTotal();
     body.innerHTML = `
       ${stepsHTML(2)}
-      <div style="margin-bottom:16px">
-        ${orderSummaryHTML()}
-      </div>
-      <div style="font-size:13px;font-weight:600;margin-bottom:10px;color:var(--muted)">Choose payment method</div>
+      ${orderSummaryHTML()}
+
+      <div style="font-size:12px;font-weight:600;color:var(--muted);margin:14px 0 8px;text-transform:uppercase;letter-spacing:.5px">Send payment to Tisa Kaonga</div>
       <div class="pay-option ${selectedPayment==='airtel'?'selected':''}" onclick="selectPay('airtel')">
         <div class="pay-icon" style="background:#e8f4fd">📱</div>
-        <div><div class="pay-label">Airtel Money</div><div class="pay-sub">USSD push to your Airtel number · Instant</div></div>
+        <div><div class="pay-label">Airtel Money</div><div class="pay-sub">${AIRTEL_NUMBER} · Tisa Kaonga</div></div>
         <div class="radio-dot ${selectedPayment==='airtel'?'selected':''}"></div>
       </div>
       <div class="pay-option ${selectedPayment==='mtn'?'selected':''}" onclick="selectPay('mtn')">
         <div class="pay-icon" style="background:#fff9e6">📱</div>
-        <div><div class="pay-label">MTN MoMo</div><div class="pay-sub">USSD push to your MTN number · Instant</div></div>
+        <div><div class="pay-label">MTN MoMo</div><div class="pay-sub">${MTN_NUMBER} · Tisa Kaonga</div></div>
         <div class="radio-dot ${selectedPayment==='mtn'?'selected':''}"></div>
       </div>
-      <div class="pay-instructions show" id="pay-instr">
+
+      <div class="pay-instructions show">
         ${payInstructions(selectedPayment, total)}
       </div>
-      <div class="modal-actions">
+
+      <div style="background:rgba(200,168,75,.08);border:1px solid rgba(200,168,75,.2);border-radius:8px;padding:12px;font-size:12px;color:var(--gold);margin-top:12px;line-height:1.7">
+        💬 <strong>After paying:</strong> tap the WhatsApp button on the next screen to send your order details + payment screenshot to us. We'll confirm and arrange everything from there.
+      </div>
+
+      <div class="modal-actions" style="margin-top:14px">
         <button class="btn-full btn-back" onclick="goBack()">← Back</button>
-        <button class="btn-full btn-next" onclick="confirmOrder()">I've Paid — Confirm Order</button>
+        <button class="btn-full btn-next" onclick="confirmOrder()">I've Paid →</button>
       </div>`;
   }
 
   if (checkoutStep === 3) {
     const ref = 'VST-' + Math.floor(Math.random()*90000+10000);
     const total = cartTotal();
+    const deliveryLine = selectedDelivery === 'yango'
+      ? `Delivery: Yango to ${orderData.address}`
+      : `Pickup: TK's Collection, Lilayi Road`;
     const waMsg = encodeURIComponent(
-      `Hi VS Tactical! 👋\n\nI've placed an order:\nRef: ${ref}\nName: ${orderData.first} ${orderData.last}\nPhone: ${orderData.phone}\nAddress: ${orderData.address}\nPayment: ${selectedPayment === 'airtel' ? 'Airtel Money' : 'MTN MoMo'}\nTotal: ${fmt(total)}\n\nItems:\n${cart.map(i => `• ${i.name} x${i.qty} — ${fmt(i.price*i.qty)}`).join('\n')}\n\nPlease confirm and arrange Yango delivery. Thank you!`
+`Hi VS Tactical! 👋
+
+*Order Ref: ${ref}*
+Name: ${orderData.first} ${orderData.last}
+Phone: ${orderData.phone}
+${deliveryLine}
+Payment: ${selectedPayment === 'airtel' ? 'Airtel Money — ' + AIRTEL_NUMBER : 'MTN MoMo — ' + MTN_NUMBER}
+Total Paid: ${fmt(total)}
+
+*Items:*
+${cart.map(i => `• ${i.name} ×${i.qty} — ${fmt(i.price*i.qty)}`).join('\n')}
+
+I'm sending my payment screenshot now. Please confirm. Thank you!`
     );
     body.innerHTML = `
       <div class="confirm-box">
-        <div class="confirm-icon">✅</div>
-        <h3>Order Placed!</h3>
-        <p>Thank you, ${orderData.first}! Send us your order on WhatsApp so we can confirm your payment and arrange your Yango delivery.</p>
+        <div class="confirm-icon">🎉</div>
+        <h3>Almost there, ${orderData.first}!</h3>
+        <p style="margin-bottom:10px">Your order ref is:</p>
         <div class="confirm-ref">${ref}</div>
-        <div style="font-size:12px;color:var(--muted);margin-bottom:20px">Keep this reference number</div>
+        <p style="margin:14px 0">Now send your order details + a <strong style="color:var(--text)">screenshot of your payment</strong> to our WhatsApp:</p>
         <a href="https://wa.me/${WHATSAPP_NUMBER}?text=${waMsg}" target="_blank" class="whatsapp-btn">
-          💬 Send Order via WhatsApp
+          💬 Send Order + Payment Screenshot
         </a>
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px;font-size:12px;color:var(--muted);margin:12px 0;line-height:1.8;text-align:left">
+          ${selectedDelivery === 'yango'
+            ? '🚗 <strong style="color:var(--text)">Yango delivery</strong> — Once we confirm your payment we\'ll send a Yango driver to you. You pay the driver directly on arrival.'
+            : '🏪 <strong style="color:var(--text)">Pickup</strong> — We\'ll WhatsApp you once your order is ready at TK\'s Collection, Lilayi Road.'}
+        </div>
         <button class="btn-full btn-back" onclick="closeCheckout();cart=[];updateCartUI()">Done — Back to Shop</button>
       </div>`;
   }
 }
 
 function stepsHTML(active) {
-  const steps = ['Details','Payment','Confirm'];
+  const steps = ['Details','Payment','Done'];
   return `<div class="steps" style="margin-bottom:20px">
     ${steps.map((s,i) => {
       const n = i+1;
@@ -555,7 +605,7 @@ function stepsHTML(active) {
 function orderSummaryHTML() {
   const total = cartTotal();
   return `<div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:8px">
-    <div style="font-size:12px;font-weight:600;margin-bottom:8px;color:var(--muted)">Order summary</div>
+    <div style="font-size:11px;font-weight:600;margin-bottom:8px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px">Order summary</div>
     ${cart.map(i => `<div class="order-line"><span>${i.name} × ${i.qty}</span><span style="color:var(--gold)">${fmt(i.price*i.qty)}</span></div>`).join('')}
     <div class="order-total-row"><span>Total</span><span>${fmt(total)}</span></div>
   </div>`;
@@ -563,19 +613,28 @@ function orderSummaryHTML() {
 
 function payInstructions(method, total) {
   if (method === 'airtel') {
-    return `<div style="margin-bottom:4px">Send <strong style="color:var(--gold)">${fmt(total)}</strong> via Airtel Money to:</div>
-    <div class="pay-number">${AIRTEL_PAYBILL}</div>
-    <div style="font-size:11px;color:var(--muted);margin-top:4px">Merchant: VS Tactical</div>
-    <div style="margin-top:8px;font-size:12px;color:var(--muted)">Dial <strong style="color:var(--text)">*778#</strong> → Send Money → Enter number <strong style="color:var(--text)">${AIRTEL_PAYBILL}</strong> → Enter amount → Confirm with PIN</div>`;
+    return `<div style="margin-bottom:6px;font-size:13px">Send <strong style="color:var(--gold)">${fmt(total)}</strong> to:</div>
+    <div class="pay-number">${AIRTEL_NUMBER}</div>
+    <div style="font-size:12px;color:var(--muted);margin-top:2px">Airtel Money · ${OWNER_NAME}</div>
+    <div style="margin-top:10px;font-size:12px;color:var(--muted);line-height:1.8">
+      Dial <strong style="color:var(--text)">*778#</strong> → Send Money → Enter <strong style="color:var(--text)">${AIRTEL_NUMBER}</strong> → Amount <strong style="color:var(--text)">${fmt(total)}</strong> → Confirm PIN
+    </div>`;
   }
-  return `<div style="margin-bottom:4px">Send <strong style="color:var(--gold)">${fmt(total)}</strong> via MTN MoMo to:</div>
-    <div class="pay-number">${MTN_PAYBILL}</div>
-    <div style="font-size:11px;color:var(--muted);margin-top:4px">Merchant: VS Tactical</div>
-    <div style="margin-top:8px;font-size:12px;color:var(--muted)">Dial <strong style="color:var(--text)">*303#</strong> → Transfer Money → Pay Merchant → Enter number <strong style="color:var(--text)">${MTN_PAYBILL}</strong> → Enter amount → Confirm with PIN</div>`;
+  return `<div style="margin-bottom:6px;font-size:13px">Send <strong style="color:var(--gold)">${fmt(total)}</strong> to:</div>
+    <div class="pay-number">${MTN_NUMBER}</div>
+    <div style="font-size:12px;color:var(--muted);margin-top:2px">MTN MoMo · ${OWNER_NAME}</div>
+    <div style="margin-top:10px;font-size:12px;color:var(--muted);line-height:1.8">
+      Dial <strong style="color:var(--text)">*303#</strong> → Transfer Money → Enter <strong style="color:var(--text)">${MTN_NUMBER}</strong> → Amount <strong style="color:var(--text)">${fmt(total)}</strong> → Confirm PIN
+    </div>`;
 }
 
 function selectPay(method) {
   selectedPayment = method;
+  renderCheckoutStep();
+}
+
+function selectDelivery(method) {
+  selectedDelivery = method;
   renderCheckoutStep();
 }
 
@@ -586,7 +645,7 @@ function submitDetails() {
   const address = document.getElementById('f-address').value.trim();
   if (!first || !last) { showToast('Please enter your name.'); return; }
   if (!phone) { showToast('Please enter your phone number.'); return; }
-  if (!address) { showToast('Please enter your delivery address.'); return; }
+  if (selectedDelivery === 'yango' && !address) { showToast('Please enter your delivery address.'); return; }
   orderData = { first, last, phone, address, notes: document.getElementById('f-notes').value.trim() };
   checkoutStep = 2;
   renderCheckoutStep();

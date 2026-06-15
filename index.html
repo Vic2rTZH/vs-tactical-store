@@ -211,6 +211,11 @@ footer .links a:hover{color:var(--gold)}
 .pd-wrap{position:relative}
 @media(max-width:540px){.pd-modal{grid-template-columns:1fr}.pd-img-wrap{min-height:200px}}
 
+/* SIZE / COLOR OPTION BUTTONS */
+.opt-btn{padding:6px 14px;border-radius:6px;border:1px solid var(--border);background:var(--surface2);color:var(--text);font-size:12px;cursor:pointer;transition:all .15s}
+.opt-btn:hover{border-color:var(--gold)}
+.opt-btn.selected{background:var(--gold);color:#111;border-color:var(--gold);font-weight:700}
+
 /* TOAST */
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--surface);border:1px solid var(--gold);color:var(--text);padding:12px 24px;border-radius:8px;font-size:13px;font-weight:600;z-index:300;transition:transform .3s;white-space:nowrap}
 .toast.show{transform:translateX(-50%) translateY(0)}
@@ -712,10 +717,26 @@ function openPD(id) {
     ? `<img src="${p.img}" alt="${p.name}"/>`
     : `<span>${p.emoji || categoryEmoji(p.category)}</span>`;
   const stockLabel = p.stock === 0
-    ? `<span style="color:var(--danger)">Out of stock</span>`
-    : p.stock <= 3
-      ? `<span style="color:var(--warning)">Only ${p.stock} left</span>`
-      : `<span style="color:var(--success)">${p.stock} in stock</span>`;
+    ? `<span style="color:var(--danger);font-weight:600">Out of Stock</span>`
+    : p.stock <= 5
+      ? `<span style="color:var(--warning);font-weight:600">Almost out of Stock</span>`
+      : `<span style="color:var(--success);font-weight:600">In Stock</span>`;
+
+  const sizesHTML = p.sizes && p.sizes.length
+    ? `<div style="margin-bottom:14px">
+        <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:7px">Size</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">${p.sizes.map(s =>
+          `<button onclick="selectOpt(this,'size')" class="opt-btn">${s}</button>`
+        ).join('')}</div>
+       </div>` : '';
+
+  const colorsHTML = p.colors && p.colors.length
+    ? `<div style="margin-bottom:14px">
+        <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:7px">Color</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">${p.colors.map(c =>
+          `<button onclick="selectOpt(this,'color')" class="opt-btn">${c}</button>`
+        ).join('')}</div>
+       </div>` : '';
   document.getElementById('pd-modal').innerHTML = `
     <div class="pd-img-wrap">${imgContent}</div>
     <div class="pd-info">
@@ -723,7 +744,9 @@ function openPD(id) {
         <div class="pd-cat">${p.category}</div>
         <div class="pd-name">${p.name}</div>
         <div class="pd-price">${fmt(p.price)}</div>
-        <div class="pd-stock">${stockLabel}</div>
+        <div class="pd-stock" style="margin-bottom:14px">${stockLabel}</div>
+        ${sizesHTML}
+        ${colorsHTML}
       </div>
       <div class="pd-actions">
         ${p.stock > 0
@@ -733,6 +756,12 @@ function openPD(id) {
       </div>
     </div>`;
   document.getElementById('pd-overlay').classList.add('open');
+}
+
+function selectOpt(btn, group) {
+  const parent = btn.closest('[data-group]') || btn.parentElement;
+  parent.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
 }
 
 function closePD(e) {

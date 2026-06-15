@@ -379,23 +379,25 @@ function fmt(n) { return 'K' + Number(n).toFixed(2).replace(/\B(?=(\d{3})+(?!\d)
 function cartTotal() { return cart.reduce((s, i) => s + i.price * i.qty, 0); }
 function cartCount() { return cart.reduce((s, i) => s + i.qty, 0); }
 
-function addToCart(id) {
+function addToCart(id, size, color) {
   const p = PRODUCTS.find(x => x.id === id);
   if (!p || p.stock === 0) return;
-  const existing = cart.find(x => x.id === id);
+  // unique cart key includes size+color so same product in different sizes are separate lines
+  const key = id + '|' + (size||'') + '|' + (color||'');
+  const existing = cart.find(x => x.cartKey === key);
   if (existing) existing.qty++;
-  else cart.push({ ...p, qty: 1 });
+  else cart.push({ ...p, qty: 1, size: size||null, color: color||null, cartKey: key });
   updateCartUI();
-  showToast('Added to cart: ' + p.name);
+  showToast('Added to cart: ' + p.name + (size ? ' · ' + size : '') + (color ? ' · ' + color : ''));
 }
 
-function removeFromCart(id) {
-  cart = cart.filter(x => x.id !== id);
+function removeFromCart(key) {
+  cart = cart.filter(x => x.cartKey !== key);
   updateCartUI();
 }
 
-function changeQty(id, delta) {
-  const item = cart.find(x => x.id === id);
+function changeQty(key, delta) {
+  const item = cart.find(x => x.cartKey === key);
   if (!item) return;
   item.qty = Math.max(1, item.qty + delta);
   updateCartUI();
@@ -416,20 +418,25 @@ function updateCartUI() {
     return;
   }
 
-  itemsEl.innerHTML = cart.map(i => `
+  itemsEl.innerHTML = cart.map(i => {
+    const opts = [i.size, i.color].filter(Boolean).join(' · ');
+    const thumb = i.img ? `<img src="${i.img}" style="width:100%;height:100%;object-fit:contain"/>` : (i.emoji || categoryEmoji(i.category));
+    return `
     <div class="cart-item">
-      <div class="ci-img">${i.emoji}</div>
+      <div class="ci-img">${thumb}</div>
       <div class="ci-info">
         <div class="ci-name">${i.name}</div>
+        ${opts ? `<div style="font-size:11px;color:var(--gold);margin-bottom:2px">${opts}</div>` : ''}
         <div class="ci-price">${fmt(i.price * i.qty)}</div>
         <div class="ci-qty">
-          <button class="qty-btn" onclick="changeQty('${i.id}',-1)">−</button>
+          <button class="qty-btn" onclick="changeQty('${i.cartKey}',-1)">−</button>
           <span class="qty-num">${i.qty}</span>
-          <button class="qty-btn" onclick="changeQty('${i.id}',1)">+</button>
+          <button class="qty-btn" onclick="changeQty('${i.cartKey}',1)">+</button>
         </div>
       </div>
-      <button class="ci-remove" onclick="removeFromCart('${i.id}')" title="Remove">✕</button>
-    </div>`).join('');
+      <button class="ci-remove" onclick="removeFromCart('${i.cartKey}')" title="Remove">✕</button>
+    </div>`;
+  }).join('');
 
   const total = cartTotal();
   document.getElementById('subtotal-val').textContent = fmt(total);
@@ -615,7 +622,7 @@ Payment: ${selectedPayment === 'airtel' ? 'Airtel Money — ' + AIRTEL_NUMBER : 
 Total Paid: ${fmt(total)}
 
 *Items:*
-${cart.map(i => `• ${i.name} ×${i.qty} — ${fmt(i.price*i.qty)}`).join('\n')}
+${cart.map(i => `• ${i.name}${i.size?' ['+i.size+']':''}${i.color?' ['+i.color+']':''} ×${i.qty} — ${fmt(i.price*i.qty)}`).join('\n')}
 
 I'm sending my payment screenshot now. Please confirm. Thank you!`
     );
@@ -654,7 +661,10 @@ function orderSummaryHTML() {
   const total = cartTotal();
   return `<div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:8px">
     <div style="font-size:11px;font-weight:600;margin-bottom:8px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px">Order summary</div>
-    ${cart.map(i => `<div class="order-line"><span>${i.name} × ${i.qty}</span><span style="color:var(--gold)">${fmt(i.price*i.qty)}</span></div>`).join('')}
+    ${cart.map(i => {
+      const opts = [i.size, i.color].filter(Boolean).join(' · ');
+      return `<div class="order-line"><span>${i.name}${opts ? '<br><span style="font-size:11px;color:var(--gold)">'+opts+'</span>' : ''} × ${i.qty}</span><span style="color:var(--gold)">${fmt(i.price*i.qty)}</span></div>`;
+    }).join('')}
     <div class="order-total-row"><span>Total</span><span>${fmt(total)}</span></div>
   </div>`;
 }
@@ -724,17 +734,17 @@ function openPD(id) {
 
   const sizesHTML = p.sizes && p.sizes.length
     ? `<div style="margin-bottom:14px">
-        <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:7px">Size</div>
-        <div style="display:flex;gap:6px;flex-wrap:wrap">${p.sizes.map(s =>
-          `<button onclick="selectOpt(this,'size')" class="opt-btn">${s}</button>`
+        <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:7px">Size <span style="color:var(--danger)">*</span></div>
+        <div id="pd-sizes" style="display:flex;gap:6px;flex-wrap:wrap">${p.sizes.map(s =>
+          `<button onclick="selectOpt(this,'pd-sizes')" class="opt-btn">${s}</button>`
         ).join('')}</div>
        </div>` : '';
 
   const colorsHTML = p.colors && p.colors.length
     ? `<div style="margin-bottom:14px">
-        <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:7px">Color</div>
-        <div style="display:flex;gap:6px;flex-wrap:wrap">${p.colors.map(c =>
-          `<button onclick="selectOpt(this,'color')" class="opt-btn">${c}</button>`
+        <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:7px">Color <span style="color:var(--danger)">*</span></div>
+        <div id="pd-colors" style="display:flex;gap:6px;flex-wrap:wrap">${p.colors.map(c =>
+          `<button onclick="selectOpt(this,'pd-colors')" class="opt-btn">${c}</button>`
         ).join('')}</div>
        </div>` : '';
   document.getElementById('pd-modal').innerHTML = `
@@ -750,7 +760,7 @@ function openPD(id) {
       </div>
       <div class="pd-actions">
         ${p.stock > 0
-          ? `<button class="btn-gold" style="padding:12px;border-radius:8px;font-size:14px;font-weight:700;border:none;cursor:pointer;width:100%" onclick="addToCart('${p.id}');document.getElementById('pd-overlay').classList.remove('open')">+ Add to Cart</button>`
+          ? `<button class="btn-gold" style="padding:12px;border-radius:8px;font-size:14px;font-weight:700;border:none;cursor:pointer;width:100%" onclick="pdAddToCart('${p.id}')">+ Add to Cart</button>`
           : `<button disabled style="padding:12px;border-radius:8px;font-size:14px;font-weight:700;border:none;width:100%;background:var(--surface2);color:var(--muted);cursor:not-allowed">Out of Stock</button>`}
         <button class="btn-outline" style="padding:11px;border-radius:8px;font-size:13px;width:100%" onclick="document.getElementById('pd-overlay').classList.remove('open')">← Back to Shop</button>
       </div>
@@ -758,10 +768,28 @@ function openPD(id) {
   document.getElementById('pd-overlay').classList.add('open');
 }
 
-function selectOpt(btn, group) {
-  const parent = btn.closest('[data-group]') || btn.parentElement;
-  parent.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('selected'));
+function selectOpt(btn, groupId) {
+  document.getElementById(groupId).querySelectorAll('.opt-btn').forEach(b => b.classList.remove('selected'));
   btn.classList.add('selected');
+}
+
+function pdAddToCart(id) {
+  const p = PRODUCTS.find(x => x.id === id);
+  if (!p) return;
+  // validate size selection
+  if (p.sizes && p.sizes.length) {
+    const sizeEl = document.querySelector('#pd-sizes .opt-btn.selected');
+    if (!sizeEl) { showToast('Please select a size first.'); return; }
+  }
+  // validate color selection
+  if (p.colors && p.colors.length) {
+    const colorEl = document.querySelector('#pd-colors .opt-btn.selected');
+    if (!colorEl) { showToast('Please select a color first.'); return; }
+  }
+  const size  = document.querySelector('#pd-sizes .opt-btn.selected')?.textContent || null;
+  const color = document.querySelector('#pd-colors .opt-btn.selected')?.textContent || null;
+  addToCart(id, size, color);
+  document.getElementById('pd-overlay').classList.remove('open');
 }
 
 function closePD(e) {

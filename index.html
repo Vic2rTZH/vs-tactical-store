@@ -288,10 +288,33 @@ footer .links a:hover{color:var(--gold)}
 <!-- ABOUT -->
 <section id="about" style="background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:40px 24px;text-align:center">
   <h2 style="font-size:20px;font-weight:700;margin-bottom:10px">About V Tactical</h2>
-  <p style="color:var(--muted);max-width:500px;margin:0 auto 20px;line-height:1.8;font-size:14px">Lusaka's home for quality tactical and outdoor gear. We carry clothing, footwear, accessories and fitness equipment sourced for quality and built for the field.</p>
+  <p style="color:var(--muted);max-width:500px;margin:0 auto 20px;line-height:1.8;font-size:14px">Lusaka's base for tactical, outdoor and fitness gear. We stock clothing, footwear, accessories and fitness equipment sourced for quality and built for high performance.</p>
   <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
     <a href="https://wa.me/260962773525" target="_blank" class="btn-gold" style="display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">💬 WhatsApp Us</a>
-    <a href="tel:+260977000000" class="btn-outline" style="display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">📞 Call Us</a>
+    <button onclick="showCallNumbers()" class="btn-outline" style="display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer">📞 Call Us</button>
+  </div>
+
+  <!-- Call numbers popup -->
+  <div id="call-popup" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:300;align-items:center;justify-content:center">
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:28px 32px;width:min(340px,90vw);text-align:center">
+      <div style="font-size:17px;font-weight:700;margin-bottom:6px">Call Us</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:20px">Tap a number to call directly</div>
+      <a href="tel:+260975281349" style="display:flex;align-items:center;gap:12px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:10px;text-decoration:none;color:var(--text);transition:border-color .15s" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'">
+        <span style="font-size:22px">📱</span>
+        <div style="text-align:left">
+          <div style="font-size:13px;font-weight:600">Airtel · +260 975 281 349</div>
+          <div style="font-size:11px;color:var(--muted)">Tisa Kaonga</div>
+        </div>
+      </a>
+      <a href="tel:+260962773525" style="display:flex;align-items:center;gap:12px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:20px;text-decoration:none;color:var(--text);transition:border-color .15s" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'">
+        <span style="font-size:22px">📱</span>
+        <div style="text-align:left">
+          <div style="font-size:13px;font-weight:600">MTN · +260 962 773 525</div>
+          <div style="font-size:11px;color:var(--muted)">Tisa Kaonga</div>
+        </div>
+      </a>
+      <button onclick="document.getElementById('call-popup').style.display='none'" style="width:100%;padding:10px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--muted);cursor:pointer;font-size:13px">Close</button>
+    </div>
   </div>
 </section>
 
@@ -797,6 +820,13 @@ function pdAddToCart(id) {
 function closePD(e) {
   if (e.target === document.getElementById('pd-overlay'))
     document.getElementById('pd-overlay').classList.remove('open');
+}
+
+// ── CALL POPUP ────────────────────────────────────────────────────────────────
+function showCallNumbers() {
+  const el = document.getElementById('call-popup');
+  el.style.display = 'flex';
+  el.onclick = e => { if (e.target === el) el.style.display = 'none'; };
 }
 
 // ── TOAST ─────────────────────────────────────────────────────────────────────

@@ -194,6 +194,8 @@
       <button onclick="exportData()">⬇ Export Backup</button>
       <button onclick="document.getElementById('importFile').click()">⬆ Import Backup</button>
       <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)"/>
+      <button onclick="document.getElementById('syncFile').click()" style="background:#1a3a5c;color:#7ec8e3;border-color:#1a3a5c;">↺ Sync from Web Store</button>
+      <input type="file" id="syncFile" accept=".js" style="display:none" onchange="syncFromWebStore(event)"/>
       <button onclick="exportCSV()">📄 Export CSV</button>
     </div>
   </div>
@@ -1329,6 +1331,39 @@ function exportWebStore() {
 function exportData() {
   const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
   dl(blob, `vs-tactical-backup-${today()}.json`);
+}
+
+function syncFromWebStore(e) {
+  const file = e.target.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    try {
+      const script = ev.target.result;
+      const match = script.match(/window\.STORE_PRODUCTS\s*=\s*(\[[\s\S]*\]);/);
+      if (!match) { alert('Could not read products from this file. Make sure it is a products.js exported from V Tactical.'); return; }
+      const webProducts = JSON.parse(match[1]);
+      let updated = 0;
+      let withSizes = 0;
+      webProducts.forEach(wp => {
+        const local = state.products.find(p => p.id === wp.id) ||
+                      state.products.find(p => p.name.trim().toLowerCase() === wp.name.trim().toLowerCase());
+        if (local) {
+          if (wp.sizes && wp.sizes.length) { local.sizes = wp.sizes; withSizes++; }
+          if (wp.colors && wp.colors.length) local.colors = wp.colors;
+          updated++;
+        }
+      });
+      save();
+      if (withSizes === 0) {
+        alert(`⚠️ Found ${updated} matching products but none had sizes/colors in this file.\n\nThis products.js was exported before sizes were added.\n\nPlease download the latest products.js directly from your GitHub repo and try again.`);
+      } else {
+        alert(`✅ Synced sizes & colors for ${withSizes} of ${updated} products.`);
+      }
+      renderProducts();
+    } catch(err) { alert('Failed to read file: ' + err.message); }
+  };
+  reader.readAsText(file);
+  e.target.value = '';
 }
 
 function importData(e) {

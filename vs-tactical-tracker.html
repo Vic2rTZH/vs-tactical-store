@@ -191,8 +191,8 @@
     <div class="nav-item" onclick="navigate('files')"><span class="nav-icon">📁</span> Files</div>
     <div class="sidebar-footer">
       <button onclick="exportWebStore()" style="background:var(--accent);color:#111;border-color:var(--accent);font-weight:700">🌐 Export to Web Store</button>
-      <button onclick="exportData()">⬇ Export Backup</button>
-      <button onclick="document.getElementById('importFile').click()">⬆ Import Backup</button>
+      <button onclick="exportData()">⬆ Export Backup</button>
+      <button onclick="document.getElementById('importFile').click()">⬇ Import Backup</button>
       <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)"/>
       <button onclick="document.getElementById('syncFile').click()" style="background:#1a3a5c;color:#7ec8e3;border-color:#1a3a5c;">↺ Sync from Web Store</button>
       <input type="file" id="syncFile" accept=".js" style="display:none" onchange="syncFromWebStore(event)"/>

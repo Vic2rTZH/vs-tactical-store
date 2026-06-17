@@ -372,25 +372,7 @@ footer .links a:hover{color:var(--gold)}
 // Falls back to built-in list if products.js hasn't been uploaded yet
 const PRODUCTS = (typeof window.STORE_PRODUCTS !== 'undefined' && window.STORE_PRODUCTS.length)
   ? window.STORE_PRODUCTS
-  : [
-  { id:'p1',  name:'Green Military Socks',             category:'Clothing',     price:65,  stock:20, emoji:'🧦' },
-  { id:'p2',  name:'Men Tactical Gloves (Fingerless)', category:'Accessories',  price:250, stock:12, emoji:'🧤' },
-  { id:'p3',  name:'Cooling Neck Gaiter',              category:'Accessories',  price:55,  stock:3,  emoji:'🧣' },
-  { id:'p4',  name:'DOOPAI Tactical Belt',             category:'Accessories',  price:100, stock:8,  emoji:'🪖' },
-  { id:'p5',  name:'Mini Zoomable Flashlight',         category:'Accessories',  price:80,  stock:15, emoji:'🔦' },
-  { id:'p6',  name:'Tactical Molle Water Bottle Pouch',category:'Accessories',  price:120, stock:0,  emoji:'🎒' },
-  { id:'p7',  name:'Mile High Tactical Belt',          category:'Accessories',  price:300, stock:6,  emoji:'⚙️' },
-  { id:'p8',  name:'Casual Cargo Vest',                category:'Clothing',     price:700, stock:4,  emoji:'🦺' },
-  { id:'p9',  name:'LN LENQIN Watches (Unisex)',       category:'Accessories',  price:320, stock:9,  emoji:'⌚' },
-  { id:'p10', name:"KXAITO Men's Watches",             category:'Accessories',  price:450, stock:5,  emoji:'⌚' },
-  { id:'p11', name:'Tactical Military Combat Boots',   category:'Footwear',     price:750, stock:7,  emoji:'🥾' },
-  { id:'p12', name:"Men's Classic Sunglasses",         category:'Accessories',  price:150, stock:11, emoji:'🕶️' },
-  { id:'p13', name:'Rothco Crew Neck T-shirt',         category:'Clothing',     price:90,  stock:18, emoji:'👕' },
-  { id:'p14', name:'Rothco Tactical Backpack',         category:'Accessories',  price:250, stock:6,  emoji:'🎒' },
-  { id:'p15', name:'Cotton Shemagh Tactical Scarf',    category:'Accessories',  price:150, stock:10, emoji:'🧣' },
-  { id:'p16', name:'Balaclava Ski Mask',               category:'Clothing',     price:60,  stock:14, emoji:'🥷' },
-  { id:'p17', name:'JUKMO Stretch Tactical Belt',      category:'Accessories',  price:300, stock:2,  emoji:'⚙️' },
-];
+  : [];
 
 // ── CART ──────────────────────────────────────────────────────────────────────
 let cart = [];

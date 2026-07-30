@@ -48,7 +48,6 @@ window.STORE_PRODUCTS = [
     ],
     "colors": [
       "Black",
-      "Tan",
       "Blue"
     ]
   },

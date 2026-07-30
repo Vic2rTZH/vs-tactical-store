@@ -47,13 +47,13 @@ img{display:block}
 .btn-outline{background:transparent;color:var(--text);padding:12px 24px;border-radius:8px;font-size:14px;border:1px solid var(--border);cursor:pointer;transition:border-color .15s}
 .btn-outline:hover{border-color:var(--gold);color:var(--gold)}
 .hero-badges{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:28px}
-.hbadge{background:rgba(200,168,75,.08);border:1px solid rgba(200,168,75,.2);color:var(--gold);padding:5px 14px;border-radius:20px;font-size:12px}
+.hbadge{background:rgba(200,168,75,.08);border:1px solid rgba(200,168,75,.2);color:var(--gold);padding:5px 14px;border-radius:20px;font-size:12px;display:inline-flex;align-items:center;gap:6px}
 
 /* TRUST BAR */
 .trust-bar{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--border)}
 .trust-item{padding:16px;text-align:center;border-right:1px solid var(--border)}
 .trust-item:last-child{border-right:none}
-.trust-icon{font-size:20px;margin-bottom:4px}
+.trust-icon{color:var(--gold);margin-bottom:6px;display:flex;justify-content:center}
 .trust-label{font-size:11px;color:var(--muted);line-height:1.4}
 @media(max-width:600px){
   .trust-bar{grid-template-columns:repeat(2,1fr)}
@@ -69,7 +69,7 @@ img{display:block}
 .search-wrap{position:relative}
 .search-input{background:var(--surface);border:1px solid var(--border);color:var(--text);padding:9px 14px 9px 36px;border-radius:8px;font-size:13px;outline:none;width:220px;transition:border-color .15s}
 .search-input:focus{border-color:var(--gold)}
-.search-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:14px;color:var(--muted);pointer-events:none}
+.search-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none;display:flex;align-items:center}
 .filter-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
 .filter-btn{padding:6px 16px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:12px;cursor:pointer;transition:all .15s}
 .filter-btn:hover,.filter-btn.active{background:var(--gold);color:#111;border-color:var(--gold);font-weight:700}
@@ -117,7 +117,7 @@ img{display:block}
 .subtotal-row{display:flex;justify-content:space-between;font-size:14px;margin-bottom:6px;color:var(--muted)}
 .total-row{display:flex;justify-content:space-between;font-size:18px;font-weight:700;margin-bottom:16px}
 .total-row span:last-child{color:var(--gold)}
-.checkout-btn{width:100%;padding:14px;background:var(--gold);color:#111;border:none;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;transition:background .15s}
+.checkout-btn{width:100%;padding:14px;background:var(--gold);color:#111;border:none;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;transition:background .15s;display:flex;align-items:center;justify-content:center;gap:8px}
 .checkout-btn:hover{background:var(--gold2)}
 
 /* CHECKOUT MODAL */
@@ -167,14 +167,14 @@ img{display:block}
 
 /* CONFIRM SCREEN */
 .confirm-box{text-align:center;padding:8px 0}
-.confirm-icon{font-size:56px;margin-bottom:16px}
+.confirm-icon{margin-bottom:16px;display:flex;justify-content:center}
 .confirm-box h3{font-size:20px;font-weight:700;margin-bottom:8px}
 .confirm-box p{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:20px}
 .confirm-ref{font-size:22px;font-weight:700;color:var(--gold);letter-spacing:2px;margin-bottom:4px}
 .whatsapp-btn{width:100%;padding:13px;background:#128c3e;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:10px;transition:background .15s}
 .whatsapp-btn:hover{background:#0e6e30}
 .modal-actions{display:flex;gap:10px;margin-top:16px}
-.btn-full{width:100%;padding:12px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;transition:all .15s;border:none}
+.btn-full{width:100%;padding:12px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;transition:all .15s;border:none;display:flex;align-items:center;justify-content:center;gap:8px}
 .btn-back{background:var(--surface2);color:var(--text);border:1px solid var(--border)}
 .btn-back:hover{border-color:var(--gold)}
 .btn-next{background:var(--gold);color:#111}
@@ -235,11 +235,11 @@ footer .links a:hover{color:var(--gold)}
   <div class="nav-links">
     <a href="#shop">Shop</a>
     <a href="#about">About</a>
-    <a href="#" onclick="showCallNumbers();return false">📞 Call us</a>
+    <a href="#" onclick="showCallNumbers();return false" style="display:inline-flex;align-items:center;gap:6px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Call us</a>
   </div>
   <div class="nav-right">
     <button class="cart-btn" onclick="openCart()">
-      🛒 Cart
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>Cart
       <span class="cart-count hidden" id="cart-count">0</span>
     </button>
   </div>
@@ -253,21 +253,21 @@ footer .links a:hover{color:var(--gold)}
   <p>Clothing, footwear, accessories and more. Pay with Airtel Money. Delivered by Yango across Lusaka.</p>
   <div class="hero-btns">
     <button class="btn-gold" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'})">Shop Now</button>
-    <a class="btn-outline" href="https://wa.me/260778741440" target="_blank">💬 WhatsApp Us</a>
+    <a class="btn-outline" href="https://wa.me/260778741440" target="_blank" style="display:inline-flex;align-items:center;gap:6px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z"/></svg>WhatsApp Us</a>
   </div>
   <div class="hero-badges">
-    <span class="hbadge">📱 Airtel Money</span>
-    <span class="hbadge">🚗 Yango Delivery</span>
-    <span class="hbadge">🏪 Pickup in Lilayi</span>
+    <span class="hbadge"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Airtel Money</span>
+    <span class="hbadge"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13l1.5-4.5A2 2 0 0 1 6.4 7h11.2a2 2 0 0 1 1.9 1.5L21 13v5a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1v-1H6v1a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/><circle cx="7" cy="17" r="1.5"/><circle cx="17" cy="17" r="1.5"/></svg>Yango Delivery</span>
+    <span class="hbadge"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l1-5h16l1 5"/><path d="M4 9v10h16V9"/><path d="M9 19v-6h6v6"/><path d="M3 9a2 2 0 0 0 4 0 2 2 0 0 0 4 0 2 2 0 0 0 4 0 2 2 0 0 0 4 0"/></svg>Pickup in Lilayi</span>
   </div>
 </section>
 
 <!-- TRUST BAR -->
 <div class="trust-bar">
-  <div class="trust-item"><div class="trust-icon">📱</div><div class="trust-label">Airtel Money<br>Payments</div></div>
-  <div class="trust-item"><div class="trust-icon">🚗</div><div class="trust-label">Yango delivery<br>across Lusaka</div></div>
-  <div class="trust-item"><div class="trust-icon">🏪</div><div class="trust-label">Pickup at<br>TK's Collection, Lilayi</div></div>
-  <div class="trust-item"><div class="trust-icon">💬</div><div class="trust-label">WhatsApp<br>+260 778 741 440</div></div>
+  <div class="trust-item"><div class="trust-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div><div class="trust-label">Airtel Money<br>Payments</div></div>
+  <div class="trust-item"><div class="trust-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13l1.5-4.5A2 2 0 0 1 6.4 7h11.2a2 2 0 0 1 1.9 1.5L21 13v5a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1v-1H6v1a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/><circle cx="7" cy="17" r="1.5"/><circle cx="17" cy="17" r="1.5"/></svg></div><div class="trust-label">Yango delivery<br>across Lusaka</div></div>
+  <div class="trust-item"><div class="trust-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l1-5h16l1 5"/><path d="M4 9v10h16V9"/><path d="M9 19v-6h6v6"/><path d="M3 9a2 2 0 0 0 4 0 2 2 0 0 0 4 0 2 2 0 0 0 4 0 2 2 0 0 0 4 0"/></svg></div><div class="trust-label">Pickup at<br>TK's Collection, Lilayi</div></div>
+  <div class="trust-item"><div class="trust-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z"/></svg></div><div class="trust-label">WhatsApp<br>+260 778 741 440</div></div>
 </div>
 
 <!-- SHOP -->
@@ -275,7 +275,7 @@ footer .links a:hover{color:var(--gold)}
   <div class="shop-header">
     <h2>All Products</h2>
     <div class="search-wrap">
-      <span class="search-icon">🔍</span>
+      <span class="search-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
       <input class="search-input" type="text" placeholder="Search products…" oninput="renderProducts()" id="search"/>
     </div>
   </div>
@@ -295,8 +295,8 @@ footer .links a:hover{color:var(--gold)}
   <h2 style="font-size:20px;font-weight:700;margin-bottom:10px">About V Tactical</h2>
   <p style="color:var(--muted);max-width:500px;margin:0 auto 20px;line-height:1.8;font-size:14px">Lusaka's base for tactical, outdoor and fitness gear. We stock clothing, footwear, accessories and fitness equipment sourced for quality and built for high performance.</p>
   <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
-    <a href="https://wa.me/260778741440" target="_blank" class="btn-gold" style="display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">💬 WhatsApp Us</a>
-    <button onclick="showCallNumbers()" class="btn-outline" style="display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer">📞 Call Us</button>
+    <a href="https://wa.me/260778741440" target="_blank" class="btn-gold" style="display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z"/></svg>WhatsApp Us</a>
+    <button onclick="showCallNumbers()" class="btn-outline" style="display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Call Us</button>
   </div>
 
   <!-- Call numbers popup -->
@@ -305,7 +305,7 @@ footer .links a:hover{color:var(--gold)}
       <div style="font-size:17px;font-weight:700;margin-bottom:6px">Call Us</div>
       <div style="font-size:12px;color:var(--muted);margin-bottom:20px">Tap a number to call directly</div>
       <a href="tel:+260778741440" style="display:flex;align-items:center;gap:12px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:20px;text-decoration:none;color:var(--text);transition:border-color .15s" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'">
-        <span style="font-size:22px">📱</span>
+        <span style="color:var(--gold);display:flex"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
         <div style="text-align:left">
           <div style="font-size:13px;font-weight:600">Airtel · +260 778 741 440</div>
         </div>
@@ -332,14 +332,14 @@ footer .links a:hover{color:var(--gold)}
 <div class="drawer" id="drawer">
   <div class="drawer-head">
     <h3>Your Cart</h3>
-    <button class="close-btn" onclick="closeCart()">✕</button>
+    <button class="close-btn" onclick="closeCart()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
   </div>
   <div class="drawer-items" id="drawer-items"></div>
   <div class="drawer-foot" id="drawer-foot" style="display:none">
     <div class="subtotal-row"><span>Subtotal</span><span id="subtotal-val">K0.00</span></div>
     <div class="subtotal-row"><span>Yango delivery</span><span>Calculated at checkout</span></div>
     <div class="total-row"><span>Total</span><span id="total-val">K0.00</span></div>
-    <button class="checkout-btn" onclick="openCheckout()">Proceed to Checkout →</button>
+    <button class="checkout-btn" onclick="openCheckout()">Proceed to Checkout<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
   </div>
 </div>
 
@@ -348,7 +348,7 @@ footer .links a:hover{color:var(--gold)}
   <div class="modal">
     <div class="modal-head">
       <h3 id="modal-title">Checkout</h3>
-      <button class="close-btn" onclick="closeCheckout()">✕</button>
+      <button class="close-btn" onclick="closeCheckout()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
     </div>
     <div class="modal-body" id="modal-body"></div>
   </div>
@@ -358,7 +358,7 @@ footer .links a:hover{color:var(--gold)}
 <div class="pd-overlay" id="pd-overlay" onclick="closePD(event)">
   <div class="pd-wrap">
     <div class="pd-modal" id="pd-modal"></div>
-    <button class="pd-close" onclick="document.getElementById('pd-overlay').classList.remove('open')">✕</button>
+    <button class="pd-close" onclick="document.getElementById('pd-overlay').classList.remove('open')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
   </div>
 </div>
 
@@ -416,7 +416,7 @@ function updateCartUI() {
   const footEl = document.getElementById('drawer-foot');
 
   if (cart.length === 0) {
-    itemsEl.innerHTML = '<div class="cart-empty"><div class="big">🛒</div><div>Your cart is empty</div><div style="font-size:12px;margin-top:6px;color:var(--muted)">Add some gear to get started</div></div>';
+    itemsEl.innerHTML = '<div class="cart-empty"><div class="big" style="display:flex;justify-content:center"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></div><div>Your cart is empty</div><div style="font-size:12px;margin-top:6px;color:var(--muted)">Add some gear to get started</div></div>';
     footEl.style.display = 'none';
     return;
   }
@@ -425,7 +425,7 @@ function updateCartUI() {
     const opts = [i.size, i.color].filter(Boolean).join(' · ');
     const thumb = i.img
       ? `<img src="${i.img}" style="width:100%;height:100%;object-fit:contain;border-radius:6px"/>`
-      : (i.emoji && i.emoji !== 'null' ? i.emoji : categoryEmoji(i.category));
+      : (i.emoji && i.emoji !== 'null' ? i.emoji : categoryIcon(i.category));
     return `
     <div class="cart-item">
       <div class="ci-img">${thumb}</div>
@@ -439,7 +439,7 @@ function updateCartUI() {
           <button class="qty-btn" onclick="changeQty('${i.cartKey}',1)">+</button>
         </div>
       </div>
-      <button class="ci-remove" onclick="removeFromCart('${i.cartKey}')" title="Remove">✕</button>
+      <button class="ci-remove" onclick="removeFromCart('${i.cartKey}')" title="Remove"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
     </div>`;
   }).join('');
 
@@ -460,13 +460,15 @@ function closeCart() {
 }
 
 // ── PRODUCTS RENDER ───────────────────────────────────────────────────────────
-function categoryEmoji(cat) {
+function categoryIcon(cat) {
   const name = (cat || '').toLowerCase();
-  if (name.includes('foot')) return '🥾';
-  if (name.includes('cloth')) return '👕';
-  if (name.includes('fitness')) return '💪';
-  if (name.includes('commdr')) return '🪖';
-  return '🎒';
+  let path;
+  if (name.includes('foot')) path = '<path d="M8 2v7.2c0 .6-.24 1.2-.66 1.63l-3.2 3.2A2.5 2.5 0 0 0 3.4 15.8V20a2 2 0 0 0 2 2h13.2a2 2 0 0 0 2-2v-.6c0-1.4-.94-2.63-2.3-3l-4.9-1.3V2z"/><line x1="8" y1="7" x2="13" y2="7"/>';
+  else if (name.includes('cloth')) path = '<path d="M20.38 3.46L16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/>';
+  else if (name.includes('fitness')) path = '<rect x="1.5" y="9" width="3" height="6" rx="1"/><rect x="19.5" y="9" width="3" height="6" rx="1"/><rect x="6" y="7" width="2.2" height="10" rx="1"/><rect x="15.8" y="7" width="2.2" height="10" rx="1"/><line x1="8.2" y1="12" x2="15.8" y2="12"/>';
+  else if (name.includes('commdr')) path = '<path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/>';
+  else path = '<path d="M8 3h8a2 2 0 0 1 2 2v1.06A4 4 0 0 1 20 10v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-9a4 4 0 0 1 2-3.94V5a2 2 0 0 1 2-2z"/><path d="M9 3v4h6V3"/><path d="M8 13h8"/><path d="M8 16.5h8"/>';
+  return `<svg style="width:0.6em;height:0.6em;vertical-align:middle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${path}</svg>`;
 }
 
 function setFilter(cat, el) {
@@ -491,7 +493,7 @@ function renderProducts() {
     const outOfStock = p.stock === 0;
     const imgContent = p.img
       ? `<img src="${p.img}" style="width:100%;height:100%;object-fit:cover;display:block"/>`
-      : (p.emoji || categoryEmoji(p.category));
+      : (p.emoji || categoryIcon(p.category));
     return `<div class="card" onclick="openPD('${p.id}')">
       <div class="card-img">${imgContent}</div>
       <div class="card-body">
@@ -548,7 +550,7 @@ function renderCheckoutStep() {
 
       <div style="font-size:12px;font-weight:600;color:var(--muted);margin:14px 0 8px;text-transform:uppercase;letter-spacing:.5px">How would you like to receive your order?</div>
       <div class="pay-option ${selectedDelivery==='yango'?'selected':''}" onclick="selectDelivery('yango')" style="margin-bottom:8px">
-        <div class="pay-icon" style="background:#fff0e6">🚗</div>
+        <div class="pay-icon" style="background:#fff0e6;color:#e8792a"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13l1.5-4.5A2 2 0 0 1 6.4 7h11.2a2 2 0 0 1 1.9 1.5L21 13v5a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1v-1H6v1a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/><circle cx="7" cy="17" r="1.5"/><circle cx="17" cy="17" r="1.5"/></svg></div>
         <div>
           <div class="pay-label">Yango Delivery</div>
           <div class="pay-sub">Delivered to your door · You pay the driver on arrival</div>
@@ -556,7 +558,7 @@ function renderCheckoutStep() {
         <div class="radio-dot ${selectedDelivery==='yango'?'selected':''}"></div>
       </div>
       <div class="pay-option ${selectedDelivery==='pickup'?'selected':''}" onclick="selectDelivery('pickup')" style="margin-bottom:14px">
-        <div class="pay-icon" style="background:#e6f4e6">🏪</div>
+        <div class="pay-icon" style="background:#e6f4e6;color:#2e8b57"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l1-5h16l1 5"/><path d="M4 9v10h16V9"/><path d="M9 19v-6h6v6"/><path d="M3 9a2 2 0 0 0 4 0 2 2 0 0 0 4 0 2 2 0 0 0 4 0 2 2 0 0 0 4 0"/></svg></div>
         <div>
           <div class="pay-label">Self Pickup — Free</div>
           <div class="pay-sub">TK's Collection · Lilayi Road, Lusaka</div>
@@ -569,12 +571,12 @@ function renderCheckoutStep() {
       <div class="form-group"><label>Landmark / notes (optional)</label><textarea id="f-notes" rows="2" placeholder="Gate colour, nearest landmark, etc.">${orderData.notes||''}</textarea></div>
       ` : `
       <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px;font-size:12px;color:var(--muted);margin-bottom:14px">
-        📍 <strong style="color:var(--text)">TK's Collection</strong> — Lilayi Road, Lusaka. We'll WhatsApp you when your order is ready for pickup.
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;color:var(--gold)"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> <strong style="color:var(--text)">TK's Collection</strong> — Lilayi Road, Lusaka. We'll WhatsApp you when your order is ready for pickup.
       </div>
       <input type="hidden" id="f-address" value="Self Pickup — TK's Collection, Lilayi Road"/>
       <input type="hidden" id="f-notes" value=""/>
       `}
-      <button class="btn-full btn-next" onclick="submitDetails()">Continue to Payment →</button>`;
+      <button class="btn-full btn-next" onclick="submitDetails()">Continue to Payment<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>`;
   }
 
   if (checkoutStep === 2) {
@@ -585,7 +587,7 @@ function renderCheckoutStep() {
 
       <div style="font-size:12px;font-weight:600;color:var(--muted);margin:14px 0 8px;text-transform:uppercase;letter-spacing:.5px">Send payment to Tisa Kaonga</div>
       <div class="pay-option selected">
-        <div class="pay-icon" style="background:#e8f4fd">📱</div>
+        <div class="pay-icon" style="background:#e8f4fd;color:#1f7aec"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
         <div><div class="pay-label">Airtel Money</div><div class="pay-sub">${AIRTEL_NUMBER} · Tisa Kaonga</div></div>
         <div class="radio-dot selected"></div>
       </div>
@@ -595,12 +597,12 @@ function renderCheckoutStep() {
       </div>
 
       <div style="background:rgba(200,168,75,.08);border:1px solid rgba(200,168,75,.2);border-radius:8px;padding:12px;font-size:12px;color:var(--gold);margin-top:12px;line-height:1.7">
-        💬 <strong>After paying:</strong> tap the WhatsApp button on the next screen to send your order details + payment screenshot to us. We'll confirm and arrange everything from there.
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z"/></svg> <strong>After paying:</strong> tap the WhatsApp button on the next screen to send your order details + payment screenshot to us. We'll confirm and arrange everything from there.
       </div>
 
       <div class="modal-actions" style="margin-top:14px">
-        <button class="btn-full btn-back" onclick="goBack()">← Back</button>
-        <button class="btn-full btn-next" onclick="confirmOrder()">I've Paid →</button>
+        <button class="btn-full btn-back" onclick="goBack()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>Back</button>
+        <button class="btn-full btn-next" onclick="confirmOrder()">I've Paid<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
       </div>`;
   }
 
@@ -627,18 +629,18 @@ I'm sending my payment screenshot now. Please confirm. Thank you!`
     );
     body.innerHTML = `
       <div class="confirm-box">
-        <div class="confirm-icon">🎉</div>
+        <div class="confirm-icon" style="color:var(--success)"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
         <h3>Almost there, ${orderData.first}!</h3>
         <p style="margin-bottom:10px">Your order ref is:</p>
         <div class="confirm-ref">${ref}</div>
         <p style="margin:14px 0">Now send your order details + a <strong style="color:var(--text)">screenshot of your payment</strong> to our WhatsApp:</p>
         <a href="https://wa.me/${WHATSAPP_NUMBER}?text=${waMsg}" target="_blank" class="whatsapp-btn">
-          💬 Send Order + Payment Screenshot
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z"/></svg>Send Order + Payment Screenshot
         </a>
         <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px;font-size:12px;color:var(--muted);margin:12px 0;line-height:1.8;text-align:left">
           ${selectedDelivery === 'yango'
-            ? '🚗 <strong style="color:var(--text)">Yango delivery</strong> — Once we confirm your payment we\'ll send a Yango driver to you. You pay the driver directly on arrival.'
-            : '🏪 <strong style="color:var(--text)">Pickup</strong> — We\'ll WhatsApp you once your order is ready at TK\'s Collection, Lilayi Road.'}
+            ? '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;color:var(--gold)"><path d="M3 13l1.5-4.5A2 2 0 0 1 6.4 7h11.2a2 2 0 0 1 1.9 1.5L21 13v5a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1v-1H6v1a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/><circle cx="7" cy="17" r="1.5"/><circle cx="17" cy="17" r="1.5"/></svg> <strong style="color:var(--text)">Yango delivery</strong> — Once we confirm your payment we\'ll send a Yango driver to you. You pay the driver directly on arrival.'
+            : '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;color:var(--gold)"><path d="M3 9l1-5h16l1 5"/><path d="M4 9v10h16V9"/><path d="M9 19v-6h6v6"/><path d="M3 9a2 2 0 0 0 4 0 2 2 0 0 0 4 0 2 2 0 0 0 4 0 2 2 0 0 0 4 0"/></svg> <strong style="color:var(--text)">Pickup</strong> — We\'ll WhatsApp you once your order is ready at TK\'s Collection, Lilayi Road.'}
         </div>
         <button class="btn-full btn-back" onclick="closeCheckout();cart=[];updateCartUI()">Done — Back to Shop</button>
       </div>`;
@@ -651,7 +653,7 @@ function stepsHTML(active) {
     ${steps.map((s,i) => {
       const n = i+1;
       const cls = n < active ? 'done' : n === active ? 'active' : '';
-      return `<div class="step ${cls}"><div class="step-num">${n < active ? '✓' : n}</div><div class="step-label">${s}</div></div>`;
+      return `<div class="step ${cls}"><div class="step-num">${n < active ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>' : n}</div><div class="step-label">${s}</div></div>`;
     }).join('')}
   </div>`;
 }
@@ -716,7 +718,7 @@ function openPD(id) {
   if (!p) return;
   const imgContent = p.img
     ? `<img src="${p.img}" alt="${p.name}"/>`
-    : `<span>${p.emoji || categoryEmoji(p.category)}</span>`;
+    : `<span>${p.emoji || categoryIcon(p.category)}</span>`;
   const stockLabel = p.stock === 0
     ? `<span style="color:var(--danger);font-weight:600">Out of Stock</span>`
     : p.stock <= 5
@@ -753,7 +755,7 @@ function openPD(id) {
         ${p.stock > 0
           ? `<button class="btn-gold" style="padding:12px;border-radius:8px;font-size:14px;font-weight:700;border:none;cursor:pointer;width:100%" onclick="pdAddToCart('${p.id}')">+ Add to Cart</button>`
           : `<button disabled style="padding:12px;border-radius:8px;font-size:14px;font-weight:700;border:none;width:100%;background:var(--surface2);color:var(--muted);cursor:not-allowed">Out of Stock</button>`}
-        <button class="btn-outline" style="padding:11px;border-radius:8px;font-size:13px;width:100%" onclick="document.getElementById('pd-overlay').classList.remove('open')">← Back to Shop</button>
+        <button class="btn-outline" style="padding:11px;border-radius:8px;font-size:13px;width:100%;display:flex;align-items:center;justify-content:center;gap:8px" onclick="document.getElementById('pd-overlay').classList.remove('open')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>Back to Shop</button>
       </div>
     </div>`;
   document.getElementById('pd-overlay').classList.add('open');

@@ -418,8 +418,8 @@
     <div class="form-group"><label>Date</label><input id="s-date" type="date"/></div>
     <div class="form-group"><label>Notes</label><input id="s-notes" type="text" placeholder="Customer, channel, etc."/></div>
     <div class="modal-actions">
-      <button class="btn btn-secondary" onclick="closeModal('modal-sale')">Cancel</button>
-      <button class="btn btn-primary" onclick="saveSale()">Log Sale</button>
+      <button id="btn-cancel-sale" class="btn btn-secondary">Cancel</button>
+      <button id="btn-save-sale" class="btn btn-primary">Log Sale</button>
     </div>
   </div>
 </div>
@@ -864,18 +864,26 @@ function calcSaleTotal() {
 }
 
 function saveSale() {
-  const productId = document.getElementById('s-product').value;
-  const qty = parseInt(document.getElementById('s-qty').value) || 0;
-  const price = parseFloat(document.getElementById('s-price').value) || 0;
-  const date = document.getElementById('s-date').value || today();
-  if (!productId) { alert('Select a product.'); return; }
-  if (qty < 1) { alert('Quantity must be at least 1.'); return; }
-  const p = state.products.find(p => p.id === productId);
-  if (p.stock < qty) { if (!confirm(`Only ${p.stock} in stock. Log anyway?`)) return; }
-  state.sales.push({ id: uid(), productId, qty, price, total: qty * price, date, notes: document.getElementById('s-notes').value });
-  const idx = state.products.findIndex(p => p.id === productId);
-  state.products[idx].stock = Math.max(0, state.products[idx].stock - qty);
-  save(); closeModal('modal-sale'); renderSales();
+  try {
+    const productId = document.getElementById('s-product').value;
+    const qty = parseInt(document.getElementById('s-qty').value) || 0;
+    const price = parseFloat(document.getElementById('s-price').value) || 0;
+    const date = document.getElementById('s-date').value || today();
+    if (!productId) { alert('Select a product.'); return; }
+    if (qty < 1) { alert('Quantity must be at least 1.'); return; }
+    const p = state.products.find(p => p.id === productId);
+    if (!p) { alert('Product not found.'); return; }
+    if (p.stock < qty) { if (!confirm(`Only ${p.stock} in stock. Log anyway?`)) return; }
+    state.sales.push({ id: uid(), productId, qty, price, total: qty * price, date, notes: document.getElementById('s-notes').value });
+    const idx = state.products.findIndex(p => p.id === productId);
+    state.products[idx].stock = Math.max(0, state.products[idx].stock - qty);
+    save();
+    closeModal('modal-sale');
+    renderSales();
+  } catch(err) {
+    alert('Error logging sale: ' + err.message);
+    console.error(err);
+  }
 }
 
 function deleteSale(id) {
@@ -1475,6 +1483,10 @@ function closeModal(id) { document.getElementById(id).classList.remove('open'); 
 document.querySelectorAll('.modal-overlay').forEach(el => {
   el.addEventListener('click', e => { if (e.target === el) el.classList.remove('open'); });
 });
+
+// Wire modal buttons via addEventListener to avoid onclick conflicts
+document.getElementById('btn-save-sale').addEventListener('click', e => { e.stopPropagation(); saveSale(); });
+document.getElementById('btn-cancel-sale').addEventListener('click', e => { e.stopPropagation(); closeModal('modal-sale'); });
 
 // ── INIT ──────────────────────────────────────────────────────────────────────
 load();

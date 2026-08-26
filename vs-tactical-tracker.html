@@ -1499,9 +1499,6 @@ document.querySelectorAll('.modal-overlay').forEach(el => {
   el.addEventListener('click', e => { if (e.target === el) el.classList.remove('open'); });
 });
 
-// Wire modal buttons via addEventListener to avoid onclick conflicts
-document.getElementById('btn-save-sale').addEventListener('click', e => { e.stopPropagation(); saveSale(); });
-document.getElementById('btn-cancel-sale').addEventListener('click', e => { e.stopPropagation(); closeModal('modal-sale'); });
 
 // ── INIT ──────────────────────────────────────────────────────────────────────
 load();

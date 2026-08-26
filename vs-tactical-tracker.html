@@ -700,7 +700,7 @@ function renderInventory(search = '') {
 
 // ── SALES ─────────────────────────────────────────────────────────────────────
 function renderSales(search = '') {
-  let sales = [...state.sales].sort((a, b) => new Date(b.date) - new Date(a.date));
+  let sales = [...state.sales].sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0) || new Date(b.date) - new Date(a.date));
   if (search) sales = sales.filter(s => {
     const p = state.products.find(p => p.id === s.productId);
     return (p && p.name.toLowerCase().includes(search.toLowerCase())) || s.notes?.toLowerCase().includes(search.toLowerCase());
@@ -892,7 +892,7 @@ function saveSaleInner() {
   if (qty < 1) { saleMsg('Quantity must be at least 1.', 'red'); return; }
   const p = state.products.find(p => p.id === productId);
   if (!p) { saleMsg('Product not found.', 'red'); return; }
-  state.sales.push({ id: uid(), productId, qty, price, total: qty * price, date, notes: document.getElementById('s-notes').value });
+  state.sales.push({ id: uid(), productId, qty, price, total: qty * price, date, createdAt: Date.now(), notes: document.getElementById('s-notes').value });
   const idx = state.products.findIndex(p => p.id === productId);
   state.products[idx].stock = Math.max(0, state.products[idx].stock - qty);
   save();

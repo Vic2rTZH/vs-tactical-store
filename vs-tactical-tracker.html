@@ -544,7 +544,16 @@ let editingProductId = null;
 let currentImage = null; // base64 string for current modal image
 
 // ── STORAGE ───────────────────────────────────────────────────────────────────
-function save() { localStorage.setItem('vs_tactical_data', JSON.stringify(state)); }
+function save() {
+  try {
+    localStorage.setItem('vs_tactical_data', JSON.stringify(state));
+  } catch(e) {
+    // Storage full — strip images temporarily to save critical data
+    const slim = JSON.parse(JSON.stringify(state));
+    slim.products.forEach(p => { if (p.img && p.img.length > 1000) p.img = null; });
+    try { localStorage.setItem('vs_tactical_data', JSON.stringify(slim)); } catch(e2) { console.error('Save failed:', e2); }
+  }
+}
 function load() {
   const raw = localStorage.getItem('vs_tactical_data');
   if (raw) {
@@ -873,7 +882,8 @@ function saleMsg(msg, color) {
   el.style.display = 'block';
 }
 
-function saveSale() {
+function saveSale() { try { saveSaleInner(); } catch(err) { saleMsg('Error: ' + err.message, 'red'); console.error(err); } }
+function saveSaleInner() {
   const productId = document.getElementById('s-product').value;
   const qty = parseInt(document.getElementById('s-qty').value) || 0;
   const price = parseFloat(document.getElementById('s-price').value) || 0;
@@ -889,7 +899,7 @@ function saveSale() {
   closeModal('modal-sale');
   renderSales();
   renderDashboard();
-}
+} // end saveSaleInner
 
 function deleteSale(id) {
   if (!confirm('Remove this sale record?')) return;

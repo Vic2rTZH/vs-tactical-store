@@ -418,8 +418,8 @@
     <div class="form-group"><label>Date</label><input id="s-date" type="date"/></div>
     <div class="form-group"><label>Notes</label><input id="s-notes" type="text" placeholder="Customer, channel, etc."/></div>
     <div class="modal-actions">
-      <button id="btn-cancel-sale" class="btn btn-secondary">Cancel</button>
-      <button id="btn-save-sale" class="btn btn-primary">Log Sale</button>
+      <button id="btn-cancel-sale" class="btn btn-secondary" onclick="closeModal('modal-sale')">Cancel</button>
+      <button id="btn-save-sale" class="btn btn-primary" onclick="saveSale()">Log Sale</button>
     </div>
   </div>
 </div>
@@ -863,27 +863,32 @@ function calcSaleTotal() {
   document.getElementById('s-total').value = 'K' + fmt(qty * price);
 }
 
+function saleMsg(msg, color) {
+  let el = document.getElementById('sale-msg');
+  if (!el) { el = document.createElement('div'); el.id = 'sale-msg'; el.style.cssText = 'padding:8px 12px;border-radius:6px;font-size:12px;margin-bottom:10px;font-weight:600'; document.querySelector('#modal-sale .modal-actions').before(el); }
+  el.style.background = color === 'red' ? 'rgba(224,82,82,.15)' : 'rgba(76,175,125,.15)';
+  el.style.color = color === 'red' ? '#e05252' : '#4caf7d';
+  el.style.border = `1px solid ${color === 'red' ? '#e05252' : '#4caf7d'}`;
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+
 function saveSale() {
-  try {
-    const productId = document.getElementById('s-product').value;
-    const qty = parseInt(document.getElementById('s-qty').value) || 0;
-    const price = parseFloat(document.getElementById('s-price').value) || 0;
-    const date = document.getElementById('s-date').value || today();
-    if (!productId) { alert('Select a product.'); return; }
-    if (qty < 1) { alert('Quantity must be at least 1.'); return; }
-    const p = state.products.find(p => p.id === productId);
-    if (!p) { alert('Product not found.'); return; }
-    if (p.stock < qty) { if (!confirm(`Only ${p.stock} in stock. Log anyway?`)) return; }
-    state.sales.push({ id: uid(), productId, qty, price, total: qty * price, date, notes: document.getElementById('s-notes').value });
-    const idx = state.products.findIndex(p => p.id === productId);
-    state.products[idx].stock = Math.max(0, state.products[idx].stock - qty);
-    save();
-    closeModal('modal-sale');
-    renderSales();
-  } catch(err) {
-    alert('Error logging sale: ' + err.message);
-    console.error(err);
-  }
+  const productId = document.getElementById('s-product').value;
+  const qty = parseInt(document.getElementById('s-qty').value) || 0;
+  const price = parseFloat(document.getElementById('s-price').value) || 0;
+  const date = document.getElementById('s-date').value || today();
+  if (!productId) { saleMsg('Please select a product.', 'red'); return; }
+  if (qty < 1) { saleMsg('Quantity must be at least 1.', 'red'); return; }
+  const p = state.products.find(p => p.id === productId);
+  if (!p) { saleMsg('Product not found.', 'red'); return; }
+  state.sales.push({ id: uid(), productId, qty, price, total: qty * price, date, notes: document.getElementById('s-notes').value });
+  const idx = state.products.findIndex(p => p.id === productId);
+  state.products[idx].stock = Math.max(0, state.products[idx].stock - qty);
+  save();
+  closeModal('modal-sale');
+  renderSales();
+  renderDashboard();
 }
 
 function deleteSale(id) {
